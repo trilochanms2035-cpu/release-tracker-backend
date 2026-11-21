@@ -20,4 +20,11 @@ def healthcheck(session: SessionDep) -> dict[str, str] | JSONResponse:
     #       {"status": "unhealthy"},
     #       status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
     #   )
-    ...
+    try:
+        session.execute(text("SELECT 1"))
+        return {"status": "healthy"}
+    except Exception:
+        return JSONResponse(
+            {"status": "unhealthy"},
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        )
