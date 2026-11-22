@@ -32,6 +32,10 @@ def seed() -> None:
         session.refresh(api)
         session.refresh(db_migration)
 
+        assert frontend.id is not None
+        assert api.id is not None
+        assert db_migration.id is not None
+
         tasks = [
             Task(
                 title="Migrate auth flow to new design",
